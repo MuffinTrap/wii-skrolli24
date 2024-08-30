@@ -29,7 +29,6 @@ CXXFLAGS += $(ROCKET_INCLUDE)
 # Set Compiler
 CXX = g++
 EXE_SUFFIX = .exe
-OBJ_DIR := obj_win
 
 # Create a list of libraries that need to be linked
 
@@ -41,15 +40,15 @@ OBJ_DIR := obj_win
 LDFLAGS = -lmgdl -lpng -lopenal -lsndfile -lfreeglut -lglu32 -lopengl32 -lws2_32 -Wl,--allow-multiple-definition
 
 # Add mgdl library search directory and include
-MGDL_DIR=
-LDFLAGS += -L$(MGDL_DIR)/lib/win
-MGDL_INCLUDE = -I$(MGDL_DIR)/include/
+MGDL_DIR=$(HOME)/libmgdl
+LDFLAGS += -L$(MGDL_DIR)
+MGDL_INCLUDE = -I$(MGDL_DIR)
 
 # Executable is the same name as current directory +
 # platform specific postfix
 # Add numbers to the end if it crashes
 # and you need to make a new one
-TARGET	:=	$(notdir $(CURDIR))_win3.exe
+TARGET	:=	$(notdir $(CURDIR))_win.exe
 
 # END Windows specific
 
@@ -61,26 +60,21 @@ CXXFLAGS += $(MGDL_INCLUDE)
 
 # Create a list of object files that make needs to
 # process
-OFILES	:= $(cpp_src:.cpp=.o)
+OFILES	:= $(cpp_src:.cpp=.wo)
 
 .PHONY: all
 
-# Select all object files in OBJ_DIR
-all : OBJ_FILES = $(wildcard $(OBJ_DIR)/*.o)
-
 # When all OFILES have been processed, link them together
 all : $(OFILES)
-	$(CXX) $(OBJ_FILES) $(CXXFLAGS) $(LDFLAGS) -o $(TARGET) 
+	$(CXX) $(OFILES) $(CXXFLAGS) $(LDFLAGS) -o $(TARGET)
 
 # Remove obj directory, all object files and the target
 clean:
 	@echo clean ...
-	@rm -fr $(OBJ_DIR) $(OFILES) $(TARGET)
+	@rm -fr $(OFILES) $(TARGET)
 
 # For any .cpp file, create a object file with the same
 # name.
 # Create object directory and move all object files there
-%.o : %.cpp
-	mkdir -p $(OBJ_DIR)
+%.wo : %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
-	mv $@ $(OBJ_DIR)

@@ -57,9 +57,9 @@ void init()
     Init3D();
 
     glClearColor(247.0f/255.0f, 1.0f, 174.0f/255.0f, 0.0f);
-    gdl::Sound* numbers = gdl::LoadSound("plink.wav");
+    gdl::Sound* music = gdl::LoadSound("plink.wav");
 
-    bool rocketInit = gdl::RocketSync::InitRocket(numbers, 120, 4);
+    bool rocketInit = gdl::RocketSync::InitRocket(music, 120, 4);
     if (rocketInit == false)
     {
         gdl::DoProgramExit();

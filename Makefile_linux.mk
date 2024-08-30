@@ -35,18 +35,15 @@ CXXFLAGS += $(ROCKET_INCLUDE)
 # Set Compiler
 CXX = clang++
 EXE_SUFFIX = .elf
-OBJ_DIR := obj_lnx
 
 # Create a list of libraries that need to be linked
-LDFLAGS = -lpng -lsndfile -lopenal -lGL -lGLU -lglut -lmgdl -Wno-unused-function -z muldefs
+LDFLAGS = -lmgdl -lpng -lsndfile -lopenal -lGL -lGLU -lglut -Wno-unused-function -z muldefs
 
 # Add mgdl library search directory and include
-MGDL_DIR=/home/muffintrap/Dev/Wii/muffin-gdl
-LDFLAGS += -L$(MGDL_DIR)/lib/lnx
-MGDL_INCLUDE = -I$(MGDL_DIR)/include/
+MGDL_DIR=$(HOME)/libmgdl
+LDFLAGS += -L$(MGDL_DIR)
+MGDL_INCLUDE = -I$(MGDL_DIR)
 
-# Add include directories for libraries
-GLUT_INCLUDE = -I/usr/include/GL/
 
 # Executable is the same name as current directory +
 # platform specific postfix
@@ -56,30 +53,25 @@ TARGET	:=	$(notdir $(CURDIR))_lnx.elf
 # Common settings and targets
 
 # Add them all to Compilation options
-CXXFLAGS += $(GLUT_INCLUDE) $(MGDL_INCLUDE) 
+CXXFLAGS += $(MGDL_INCLUDE)
 
 # Create a list of object files that make needs to
 # process
-OFILES	:= $(cpp_src:.cpp=.o)
+OFILES	:= $(cpp_src:.cpp=.lo)
 
 .PHONY: all
 
-# Select all object files in OBJ_DIR
-all : OBJ_FILES = $(wildcard $(OBJ_DIR)/*.o)
-
 # When all OFILES have been processed, link them together
 all : $(OFILES)
-	$(CXX) $(OBJ_FILES) $(CXXFLAGS) $(LDFLAGS) -o $(TARGET)
+	$(CXX) $(OFILES) $(CXXFLAGS) $(LDFLAGS) -o $(TARGET)
 
 # Remove obj directory, all object files and the target
 clean:
 	@echo clean ...
-	@rm -fr $(OBJ_DIR) $(OFILES) $(TARGET)
+	@rm -fr $(OFILES) $(TARGET)
 
 # For any .cpp file, create a object file with the same
 # name.
 # Create object directory and move all object files there
-%.o : %.cpp
-	mkdir -p $(OBJ_DIR)
+%.lo : %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
-	mv $@ $(OBJ_DIR)
