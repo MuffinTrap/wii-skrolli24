@@ -10,6 +10,7 @@ bool Mesh::LoadFile(std::string fbxFile)
 	opts.target_axes = ufbx_axes_right_handed_y_up;
 	opts.target_unit_meters = 1.0f;
 	ufbx_error error;
+	printf("Readinf fbx file %s\n", fbxFile.c_str());
 	scene = ufbx_load_file(fbxFile.c_str(), &opts, &error);
 	gdl_assert_printf(scene != nullptr, "Cannot load fbx: %s\n", error.description.data);
 
@@ -41,11 +42,10 @@ void Mesh::DrawImmediate(MeshDrawMode mode)
 		{
 			uint32_t index = face.index_begin + corner;
 			ufbx_vec3 position = mesh->vertex_position[index];
-			ufbx_vec3 normal = mesh->vertex_normal[index];
-			ufbx_vec2 uv = mesh->vertex_uv[index];
-			glVertex3f(position.x, position.y, position.z);
 			if (mode == Textured)
 			{
+				ufbx_vec3 normal = mesh->vertex_normal[index];
+				ufbx_vec2 uv = mesh->vertex_uv[index];
 				glNormal3f(normal.x, normal.y, normal.z);
 				//flipeti flip
 				float y = uv.y;
@@ -53,6 +53,7 @@ void Mesh::DrawImmediate(MeshDrawMode mode)
 				y *= -1.0f;
 				glTexCoord2f(uv.x, y);
 			}
+			glVertex3f(position.x, position.y, position.z);
 		}
 		if (mode == Lines)
 		{
