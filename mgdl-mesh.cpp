@@ -10,13 +10,13 @@ bool Mesh::LoadFile(std::string fbxFile)
 	opts.target_axes = ufbx_axes_right_handed_y_up;
 	opts.target_unit_meters = 1.0f;
 	ufbx_error error;
-	printf("Readinf fbx file %s\n", fbxFile.c_str());
+	printf("Reading fbx file %s\n", fbxFile.c_str());
 	scene = ufbx_load_file(fbxFile.c_str(), &opts, &error);
 	gdl_assert_printf(scene != nullptr, "Cannot load fbx: %s\n", error.description.data);
 
 	for (ufbx_node* node : scene->nodes)
 	{
-		printf("%s\n", node->name.data);
+		printf("Found node %s\n", node->name.data);
 		// try to get the mesh of this node
 		mesh = node->mesh;
 	}
@@ -24,6 +24,10 @@ bool Mesh::LoadFile(std::string fbxFile)
 	return true;
 }
 
+ufbx_vec3 Mesh::GetVertex(size_t index)
+{
+	return mesh->vertex_position[index];
+}
 void Mesh::DrawImmediate(MeshDrawMode mode)
 {
 	if (mode == Textured)
@@ -31,11 +35,11 @@ void Mesh::DrawImmediate(MeshDrawMode mode)
 		glBegin(GL_TRIANGLES);
 		glColor3f(1.0f, 1.0f, 1.0f);
 	}
-	for (ufbx_face face : mesh->faces)
+	for(ufbx_face face : mesh->faces)
 	{
 		if (mode == Lines)
 		{
-			glBegin(GL_LINE_LOOP);
+			glBegin(GL_LINES);
 			glColor3f(0.0f, 0.0f, 0.0f);
 		}
 		for(uint32_t corner = 0; corner < face.num_indices; corner++)
@@ -53,6 +57,10 @@ void Mesh::DrawImmediate(MeshDrawMode mode)
 				y *= -1.0f;
 				glTexCoord2f(uv.x, y);
 			}
+
+			// NOTE!
+			// This must be last since GX needs to know
+			// what data goes to vertex before sending the position
 			glVertex3f(position.x, position.y, position.z);
 		}
 		if (mode == Lines)

@@ -40,8 +40,8 @@ INCLUDES += rocket/
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
-CFLAGS	= -O3 -Werror -Wall -Wextra -DPLATFORM_WII $(MACHDEP) $(INCLUDE)
-CXXFLAGS	= -Wwrite-strings $(CFLAGS) -DSYNC_PLAYER
+CFLAGS	= -g -Werror -Wall -Wextra -DPLATFORM_WII -std=c++11 $(MACHDEP) $(INCLUDE)
+CXXFLAGS	= -Wwrite-strings $(CFLAGS) -DSYNC_PLAYER -DUFBX_REAL_IS_FLOAT
 
 LDFLAGS	=	$(MACHDEP) -Wl,-Map,$(notdir $@).map
 

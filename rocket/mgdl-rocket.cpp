@@ -1,6 +1,7 @@
 #include "mgdl-rocket.h"
 #include "sync.h"
 
+#include <mgdl/mgdl-assert.h>
 #include <mgdl/mgdl-sound.h>
 #include <cmath>
 #include <stdio.h>
@@ -134,6 +135,7 @@ bool gdl::RocketSync::InitRocket(gdl::Sound* soundFile, float bpm, int rowsPerBe
 
 void gdl::RocketSync::StartSync()
 {
+    gdl_assert_print(instance!=nullptr, "No RocketSync instance");
     instance->Play();
 }
 
