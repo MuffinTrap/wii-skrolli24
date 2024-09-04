@@ -1,0 +1,25 @@
+<sync rows="128">
+	<tracks>
+		<track name="effect_active">
+			<key interpolation="0" value="0" row="0"/>
+			<key interpolation="0" value="2" row="8"/>
+		</track>
+		<track name="item_visible"/>
+		<track name="fade_A"/>
+		<track name="camera:rotX"/>
+		<track name="camera:rotY"/>
+		<track name="camera:rotZ"/>
+		<track name="camera:X">
+			<key interpolation="0" value="0" row="0"/>
+		</track>
+		<track name="camera:Y">
+			<key interpolation="0" value="0" row="0"/>
+			<key interpolation="0" value="0" row="8"/>
+		</track>
+		<track name="camera:Z">
+			<key interpolation="0" value="0.80000001" row="0"/>
+			<key interpolation="0" value="0" row="8"/>
+		</track>
+	</tracks>
+	<bookmarks/>
+</sync>

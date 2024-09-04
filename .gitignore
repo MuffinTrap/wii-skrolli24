@@ -52,3 +52,9 @@ build/
 *.wo
 *.lo
 *.mo
+
+# Indiviual rocket tracks
+# since they would only be useful
+# on pc exports
+*.track
+
