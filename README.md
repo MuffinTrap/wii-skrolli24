@@ -1,6 +1,10 @@
 # wii-skrolli24
 Wii Demo for Skrolli Party 2024
 
+### Requirements:
+Libraries needed from Devkitpro pacman
+	- ppc-glm
+
 ### Credits:
 - muffintrap : code
 - RaccoonViolet : 3D models

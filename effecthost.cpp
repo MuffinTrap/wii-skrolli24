@@ -4,6 +4,7 @@
 #include <cmath>
 #include <mgdl/mgdl-opengl.h>
 #include <mgdl/mgdl-main.h>
+#include <glm/glm.hpp>
 #include "palette.h"
 #include "assetmanager.h"
 #include "rocketdebug.h"
@@ -182,6 +183,9 @@ void EffectHost::Draw()
     Init3D();
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+	// Camera position and direction
+
 	gluLookAt(gdl::RocketSync::GetFloat(camera_X),
 				gdl::RocketSync::GetFloat(camera_Y),
 				 gdl::RocketSync::GetFloat(camera_Z),
