@@ -8,4 +8,8 @@ class RocketDebug
 	void Init();
 	void Draw(gdl::Font* font);
 	void Free();
+	float* frameTimes;
+	float* cpuTimes;
+	size_t index;
+	const size_t size = 1024;
 };

@@ -4,10 +4,6 @@
 #include <mgdl.h>
 #include "palette.h"
 
-static float* frameTimes;
-static float* cpuTimes;
-static size_t index;
-static const size_t size = 1024;
 
 void RocketDebug::Init()
 {
