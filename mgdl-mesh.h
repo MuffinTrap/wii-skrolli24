@@ -21,4 +21,7 @@ public:
 	ufbx_scene* scene = nullptr;
 	ufbx_mesh* mesh = nullptr;
 
+	static void DrawQuad();
+	static void DrawBox();
+
 };

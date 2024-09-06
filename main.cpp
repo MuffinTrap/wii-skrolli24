@@ -7,11 +7,6 @@
 
 static EffectHost host;
 
-void Init2D()
-{
-    glMatrixMode(GL_PROJECTION);
-    gluOrtho2D(0.0, (double)gdl::GetScreenWidth(), 0.0, (double)gdl::GetScreenHeight());
-}
 
 void Cross3D()
 {
@@ -82,5 +77,6 @@ int main()
         init,
         update,  // std::function callbacks
         render
+        //,gdl::PlatformInitFlag::FlagPauseUntilA
     );
 }

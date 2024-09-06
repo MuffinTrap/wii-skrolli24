@@ -23,7 +23,12 @@ public:
 	void Save();
 	void Free();
 
-
+private:
+	void DrawTitle();
+	void DrawHouse();
+	void DrawRoom();
+	void DrawEmptyRoom();
+	void DrawItem();
 	EffectName activeEffect;
 	int visibleItem;
 	std::vector<Mesh*> items;

@@ -99,7 +99,7 @@ void start_save_sync(const char *filename_h, const char *filename_cpp) {
     fprintf(file_h, "// sync data declaration\n");
     fprintf(file_h, "#ifdef SYNC_PLAYER\n");
     fprintf(file_h, "#pragma once\n");
-    fprintf(file_h, "#include \"../rocket/track.h\"\n");
+    fprintf(file_h, "#include \"rocket/track.h\"\n");
     fclose(file_h);
 
     FILE *file_cpp = fopen(filename_cpp, "w");
@@ -109,7 +109,7 @@ void start_save_sync(const char *filename_h, const char *filename_cpp) {
     }
     fprintf(file_cpp, "// sync data implementation\n");
     fprintf(file_h, "#ifdef SYNC_PLAYER\n");
-    fprintf(file_cpp, "#include \"../rocket/track.h\"\n");
+    fprintf(file_cpp, "#include \"rocket/track.h\"\n");
     fclose(file_cpp);
 }
 

@@ -233,7 +233,7 @@ void gdl::RocketSync::Play()
 
 #else
 
-    ROCKET_TRACK gdl::RocketSync::GetTrack(const char* trackName)
+    ROCKET_TRACK gdl::RocketSync::GetTrack(const char* trackName, bool save)
     {
         if (instance == nullptr)
         {
@@ -245,7 +245,12 @@ void gdl::RocketSync::Play()
             printf("No device\n");
             return nullptr;
         }
-        return sync_get_track(instance->rocket_device, trackName);
+        ROCKET_TRACK track = sync_get_track(instance->rocket_device, trackName);
+        if (save)
+        {
+            SetToBeSaved(track);
+        }
+        return track;
     }
 
     // -----------------------------------------------------------

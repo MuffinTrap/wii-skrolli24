@@ -1,6 +1,7 @@
 #include "mgdl-mesh.h"
 #include <mgdl/mgdl-opengl.h>
 #include <mgdl/mgdl-assert.h>
+#include <glm/glm.hpp>
 
 bool Mesh::LoadFile(std::string fbxFile)
 {
@@ -82,5 +83,59 @@ Mesh::~Mesh()
 		ufbx_free_scene(scene);
 	}
 }
+static void Quad(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c, const glm::vec3& d)
+{
+	glVertex3f(d.x, d.y, d.z);
+	glVertex3f(c.x, c.y, c.z);
+	glVertex3f(b.x, b.y, b.z);
+	glVertex3f(a.x, a.y, a.z);
+}
+
+void Mesh::DrawQuad()
+{
+	glBegin(GL_QUADS);
+	glm::vec3 bl = {-0.5f, 0.0f, -0.5f};
+	glm::vec3 br = {0.5f, 0.0f, -0.5f};
+	glm::vec3 fl = {-0.5f, 0.0f, 0.5f};
+	glm::vec3 fr = {0.5f, 0.0f, 0.5f};
+	Quad(fl, fr, br, bl);
+	glEnd();
+}
+
+void Mesh::DrawBox()
+{
+	float height = 0.5f;
+	glm::vec3 bl = {-0.5f, -0.5f, -0.5f};
+	glm::vec3 br = {0.5f, -0.5f, -0.5f};
+	glm::vec3 fl = {-0.5f, -0.5f, 0.5f};
+	glm::vec3 fr = {0.5f, -0.5f, 0.5f};
+
+	glm::vec3 tbl = {-0.5f, height, -0.5f};
+	glm::vec3 tbr = {0.5f, height, -0.5f};
+	glm::vec3 tfl = {-0.5f, height, 0.5f};
+	glm::vec3 tfr = {0.5f, height, 0.5f};
+
+	/*
+	glm::vec3 R = {1.0f, 0.0f, 0.0f};
+	glm::vec3 U = {0.0f, 1.0f, 0.0f};
+	glm::vec3 F = {0.0f, 0.0f, 0.001f};
+	*/
+
+	glBegin(GL_QUADS);
+		// left side
+		Quad(bl, tbl, tfl, fl);
+		// front
+		Quad(fl, tfl, tfr, fr);
+		// right
+		Quad(fr, tfr, tbr, br);
+		// back
+		Quad(br, tbr, tbl, bl);
+		// Top
+		Quad(tfl, tbl, tbr, tfr);
+		// Bottom
+		Quad(fl, bl, br, fr);
+	glEnd();
+}
+
 
 
