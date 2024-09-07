@@ -13,7 +13,7 @@ void Model::Draw()
 	for(size_t i = 0; i < meshes.size(); i++)
 	{
 		glBindTexture(GL_TEXTURE_2D, textures[i]->GetTextureId());
-		meshes[i]->DrawImmediate(Textured);
+		meshes[i]->DrawImmediate();
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);

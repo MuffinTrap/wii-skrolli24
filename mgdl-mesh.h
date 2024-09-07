@@ -5,17 +5,11 @@
 
 #include "ufbx.h"
 
-enum MeshDrawMode
-{
-	Textured,
-	Lines
-};
-
 class Mesh
 {
 public:
 	bool LoadFile(std::string fbxFile);
-	void DrawImmediate(MeshDrawMode mode);
+	void DrawImmediate();
 	ufbx_vec3 GetVertex(size_t index);
 	~Mesh();
 	ufbx_scene* scene = nullptr;

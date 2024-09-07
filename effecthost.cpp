@@ -21,6 +21,8 @@ void DrawTitle();
 #ifndef SYNC_PLAYER
     const struct sync_track *effect_active;  // Which effect is active.
     const struct sync_track *item_visible;  // Which item is shown
+    const struct sync_track *image_visible;  // Which image is shown
+
     const struct sync_track *camera_rotX;  // Camera Rotation around X
     const struct sync_track *camera_rotY;  // around Y
     const struct sync_track *camera_rotZ;  // around Z
@@ -36,15 +38,10 @@ void DrawTitle();
     const struct sync_track *item_rotZ;  // around Z
     const struct sync_track *item_scale;  //
 
-    const struct sync_track *room_X;  // Camera Offset to Origo X
-    const struct sync_track *room_Y;  // Offset to Origo Y
-    const struct sync_track *room_Z;  // Offset to Origo Z
-    const struct sync_track *room_scale;  // Offset to Origo Z
-
-    const struct sync_track *house_X;  // Camera Offset to Origo X
-    const struct sync_track *house_Y;  // Offset to Origo Y
-    const struct sync_track *house_Z;  // Offset to Origo Z
-    const struct sync_track *house_scale;  // Offset to Origo Z
+    const struct sync_track *image_X;  // Camera Offset to Origo X
+    const struct sync_track *image_Y;  // Offset to Origo Y
+    const struct sync_track *image_Z;  // Offset to Origo Z
+    const struct sync_track *image_scale;  // Offset to Origo Z
 
     const struct sync_track *fade_A;	// Fade alpha. 0 clear 1 black screen
 
@@ -100,6 +97,8 @@ void EffectHost::Init()
 #ifndef SYNC_PLAYER
 	effect_active = gdl::RocketSync::GetTrack("effect_active");
 	item_visible = gdl::RocketSync::GetTrack( "item_visible");
+	image_visible = gdl::RocketSync::GetTrack( "image_visible");
+
 	camera_X = gdl::RocketSync::GetTrack( "camera:X");
 	camera_Y = gdl::RocketSync::GetTrack( "camera:Y");
 	camera_Z = gdl::RocketSync::GetTrack( "camera:Z");
@@ -115,15 +114,10 @@ void EffectHost::Init()
 	item_rotZ = gdl::RocketSync::GetTrack( "item:rotZ");
 	item_scale = gdl::RocketSync::GetTrack( "item:scale");
 
-	house_X = gdl::RocketSync::GetTrack("house:X");
-	house_Y = gdl::RocketSync::GetTrack("house:Y");
-	house_Z = gdl::RocketSync::GetTrack("house:Z");
-	house_scale = gdl::RocketSync::GetTrack("house:scale");
-
-	room_X = gdl::RocketSync::GetTrack("room:X");
-	room_Y = gdl::RocketSync::GetTrack("room:Y");
-	room_Z = gdl::RocketSync::GetTrack("room:Z");
-	room_scale = gdl::RocketSync::GetTrack("room:scale");
+	image_X = gdl::RocketSync::GetTrack("image:X");
+	image_Y = gdl::RocketSync::GetTrack("image:Y");
+	image_Z = gdl::RocketSync::GetTrack("image:Z");
+	image_scale = gdl::RocketSync::GetTrack("image:scale");
 
 	fade_A = gdl::RocketSync::GetTrack( "fade_A");
 
@@ -151,50 +145,34 @@ void EffectHost::Update ()
 	activeEffect = static_cast<EffectName>(gdl::RocketSync::GetInt(effect_active));
 }
 
-void EffectHost::DrawTitle()
+void EffectHost::DrawText()
 {
 	gdl::Font* f = AssetManager::GetDebugFont();
 	glTranslatef(0.0f, 0.0f, -1.0f);
 	f->Printf(0x333f58FF, 0.2f, gdl::LJustify, gdl::LJustify, "Objects of\nSentimental Value\nSpinning to\nChillstep");
-
-	// Draw character looking at house from the side
 }
 
-void EffectHost::DrawHouse()
+void EffectHost::DrawBackground()
 {
-	// Draw House
-	gdl::Image* roomb = AssetManager::GetImage("housebg");
+	int imageIndex = gdl::RocketSync::GetInt(image_visible);
+	if (imageIndex < 0)
+	{
+		return;
+	}
+	gdl::Image* bg = AssetManager::GetImage(imageIndex);
+	if (bg == nullptr)
+	{
+		return;
+	}
 	glPushMatrix();
-	float s = gdl::RocketSync::GetFloat(house_scale);
 	glTranslatef(
-		gdl::RocketSync::GetFloat(house_X),
-		gdl::RocketSync::GetFloat(house_Y),
-		gdl::RocketSync::GetFloat(house_Z));
+		gdl::RocketSync::GetFloat(image_X),
+		gdl::RocketSync::GetFloat(image_Y),
+		gdl::RocketSync::GetFloat(image_Z));
+	float s = gdl::RocketSync::GetFloat(image_scale);
 	glScalef(s, s, 1.0f);
-	roomb->Draw3D(1.0f, gdl::LJustify, gdl::LJustify);
+	bg->Draw3D(1.0f, gdl::LJustify, gdl::LJustify);
 	glPopMatrix();
-
-	// Draw character from behind
-	DrawItem();
-
-}
-
-void EffectHost::DrawRoom()
-{
-	// Draw the room background
-	// NOTE But how?
-	gdl::Image* roomb = AssetManager::GetImage("roombg");
-	glPushMatrix();
-	float s = gdl::RocketSync::GetFloat(room_scale);
-	glTranslatef(
-		gdl::RocketSync::GetFloat(room_X),
-		gdl::RocketSync::GetFloat(room_Y),
-		gdl::RocketSync::GetFloat(room_Z));
-	glScalef(s, s, 1.0f);
-	roomb->Draw3D(1.0f, gdl::LJustify, gdl::LJustify);
-	glPopMatrix();
-
-	DrawItem();
 }
 
 void EffectHost::DrawItem()
@@ -206,7 +184,10 @@ void EffectHost::DrawItem()
 		return;
 	}
 	Model* model = AssetManager::GetModel(itemIndex);
-    glEnable(GL_CULL_FACE);
+	if (model == nullptr)
+	{
+		return;
+	}
 
 	float mx = gdl::RocketSync::GetFloat(item_X);
 	float my = gdl::RocketSync::GetFloat(item_Y);
@@ -229,17 +210,12 @@ void EffectHost::DrawItem()
 
     // TODO: Change font and image default
     // rendering to CCW
+	/*
     glPushMatrix();
         glTranslatef(00.0f, -00.0f, -1.0f);
         AssetManager::GetDebugFont()->Printf(gdl::Colors::Black, 0.2f, gdl::LJustify, gdl::LJustify, "scale:%.1f", is);
     glPopMatrix();
-}
-
-void EffectHost::DrawEmptyRoom()
-{
-	// Draw character on the doorway
-	// Draw Character looking at the empty room
-
+    */
 }
 
 
@@ -278,20 +254,15 @@ void EffectHost::Draw()
 	{
 		// nop
 		case fxTitle:
-			DrawTitle();
+			DrawText();
 			break;
 
-		case fxHouse:
-			DrawHouse();
-
+		case fxBgAndItem:
+			DrawBackground();
+			DrawItem();
 			break;
-		case fxRoom:
-			DrawRoom();
-
-			break;
-		case fxEmptyRoom:
-			DrawEmptyRoom();
-			break;
+		case fxQUIT_DEMO:
+			// TODO quit demo
 		default:
 			// nop
 			break;

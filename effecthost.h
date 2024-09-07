@@ -6,9 +6,7 @@
 enum EffectName
 {
 	fxTitle = 0,
-	fxHouse = 1,
-	fxRoom = 2,
-	fxEmptyRoom = 3,
+	fxBgAndItem = 1,
 	//////////////////////////
 	fxQUIT_DEMO = 999
 };
@@ -24,12 +22,8 @@ public:
 	void Free();
 
 private:
-	void DrawTitle();
-	void DrawHouse();
-	void DrawRoom();
-	void DrawEmptyRoom();
+	void DrawText();
+	void DrawBackground();
 	void DrawItem();
 	EffectName activeEffect;
-	int visibleItem;
-	std::vector<Mesh*> items;
 };

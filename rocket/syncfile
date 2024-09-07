@@ -3,21 +3,31 @@
 		<track name="effect_active">
 			<key interpolation="0" value="0" row="0"/>
 			<key interpolation="0" value="1" row="8"/>
-			<key interpolation="0" value="2" row="24"/>
+			<key interpolation="0" value="1" row="24"/>
 		</track>
 		<track name="item_visible">
 			<key interpolation="0" value="-1" row="0"/>
 			<key interpolation="0" value="1" row="24"/>
+			<key interpolation="0" value="2" row="40"/>
+			<key interpolation="0" value="3" row="56"/>
+			<key interpolation="0" value="4" row="72"/>
+		</track>
+		<track name="image_visible">
+			<key interpolation="0" value="0" row="0"/>
+			<key interpolation="0" value="1" row="24"/>
 		</track>
 		<track name="fade_A"/>
 		<track name="camera:rotX">
+			<key interpolation="0" value="0" row="0"/>
 			<key interpolation="0" value="0" row="8"/>
 		</track>
 		<track name="camera:rotY">
+			<key interpolation="0" value="0" row="0"/>
 			<key interpolation="0" value="0" row="8"/>
 			<key interpolation="0" value="0" row="16"/>
 		</track>
 		<track name="camera:rotZ">
+			<key interpolation="0" value="0" row="0"/>
 			<key interpolation="0" value="0" row="8"/>
 		</track>
 		<track name="camera:X">
@@ -33,63 +43,64 @@
 		</track>
 		<track name="item:rotX">
 			<key interpolation="0" value="0" row="0"/>
+			<key interpolation="1" value="90" row="24"/>
+			<key interpolation="0" value="0" row="40"/>
+			<key interpolation="0" value="0" row="72"/>
 		</track>
 		<track name="item:rotY">
 			<key interpolation="0" value="0" row="0"/>
 			<key interpolation="1" value="0" row="24"/>
-			<key interpolation="0" value="360" row="40"/>
+			<key interpolation="0" value="180" row="39"/>
+			<key interpolation="1" value="0" row="40"/>
+			<key interpolation="0" value="180" row="55"/>
+			<key interpolation="1" value="0" row="56"/>
+			<key interpolation="0" value="180" row="71"/>
+			<key interpolation="1" value="0" row="72"/>
+			<key interpolation="0" value="180" row="88"/>
 		</track>
 		<track name="item:rotZ">
 			<key interpolation="0" value="0" row="0"/>
 			<key interpolation="0" value="0" row="8"/>
+			<key interpolation="0" value="0" row="24"/>
+			<key interpolation="0" value="0" row="72"/>
 		</track>
 		<track name="item:X">
 			<key interpolation="0" value="0" row="0"/>
+			<key interpolation="0" value="0" row="24"/>
 		</track>
 		<track name="item:Y">
 			<key interpolation="0" value="-2" row="0"/>
+			<key interpolation="0" value="0" row="24"/>
+			<key interpolation="0" value="-10" row="40"/>
+			<key interpolation="0" value="1" row="56"/>
+			<key interpolation="0" value="-1" row="72"/>
 		</track>
 		<track name="item:Z">
 			<key interpolation="0" value="-8" row="0"/>
+			<key interpolation="0" value="-30" row="24"/>
 		</track>
 		<track name="item:scale">
 			<key interpolation="0" value="1" row="0"/>
 			<key interpolation="1" value="0.0099999998" row="3"/>
 			<key interpolation="0" value="0.80000001" row="15"/>
-			<key interpolation="1" value="0" row="24"/>
-			<key interpolation="0" value="1" row="40"/>
+			<key interpolation="0" value="0.2" row="24"/>
+			<key interpolation="0" value="0.69999999" row="40"/>
+			<key interpolation="0" value="0.2" row="56"/>
+			<key interpolation="0" value="0.25" row="72"/>
 		</track>
-		<track name="room:X">
+		<track name="image:X">
 			<key interpolation="0" value="0" row="0"/>
-			<key interpolation="1" value="10" row="24"/>
-			<key interpolation="0" value="-10" row="40"/>
 		</track>
-		<track name="room:Y">
-			<key interpolation="0" value="-30" row="0"/>
-		</track>
-		<track name="room:Z">
-			<key interpolation="0" value="-30" row="0"/>
-		</track>
-		<track name="room:scale">
-			<key interpolation="1" value="120" row="0"/>
-		</track>
-		<track name="house:X">
-			<key interpolation="1" value="0" row="0"/>
-			<key interpolation="1" value="-10" row="16"/>
-			<key interpolation="0" value="-30" row="21"/>
-		</track>
-		<track name="house:Y">
+		<track name="image:Y">
 			<key interpolation="0" value="20" row="0"/>
+			<key interpolation="0" value="-40" row="24"/>
 		</track>
-		<track name="house:Z">
-			<key interpolation="1" value="-50" row="0"/>
-			<key interpolation="1" value="-50" row="8"/>
-			<key interpolation="1" value="-40" row="16"/>
-			<key interpolation="0" value="-20" row="21"/>
+		<track name="image:Z">
+			<key interpolation="0" value="-50" row="0"/>
 		</track>
-		<track name="house:scale">
+		<track name="image:scale">
 			<key interpolation="0" value="120" row="0"/>
-			<key interpolation="0" value="120" row="10"/>
+			<key interpolation="0" value="160" row="24"/>
 		</track>
 	</tracks>
 	<bookmarks/>

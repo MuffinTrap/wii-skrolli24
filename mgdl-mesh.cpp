@@ -22,6 +22,8 @@ bool Mesh::LoadFile(std::string fbxFile)
 		mesh = node->mesh;
 	}
 	printf("Mesh loaded\n");
+
+	// TODO Record display list
 	return true;
 }
 
@@ -29,48 +31,38 @@ ufbx_vec3 Mesh::GetVertex(size_t index)
 {
 	return mesh->vertex_position[index];
 }
-void Mesh::DrawImmediate(MeshDrawMode mode)
+void Mesh::DrawImmediate()
 {
-	if (mode == Textured)
-	{
-		glBegin(GL_TRIANGLES);
-		glColor3f(1.0f, 1.0f, 1.0f);
-	}
+	glColor3f(1.0f, 1.0f, 1.0f);
 	for(ufbx_face face : mesh->faces)
 	{
-		if (mode == Lines)
+
+		if (face.num_indices == 3)
 		{
-			glBegin(GL_LINES);
-			glColor3f(0.0f, 0.0f, 0.0f);
+			glBegin(GL_TRIANGLES);
+		}
+		else if (face.num_indices == 4)
+		{
+			glBegin(GL_QUADS);
 		}
 		for(uint32_t corner = 0; corner < face.num_indices; corner++)
 		{
 			uint32_t index = face.index_begin + corner;
 			ufbx_vec3 position = mesh->vertex_position[index];
-			if (mode == Textured)
-			{
-				ufbx_vec3 normal = mesh->vertex_normal[index];
-				ufbx_vec2 uv = mesh->vertex_uv[index];
-				glNormal3f(normal.x, normal.y, normal.z);
-				//flipeti flip
-				float y = uv.y;
-				y -= 1.0f;
-				y *= -1.0f;
-				glTexCoord2f(uv.x, y);
-			}
+			ufbx_vec3 normal = mesh->vertex_normal[index];
+			ufbx_vec2 uv = mesh->vertex_uv[index];
+			glNormal3f(normal.x, normal.y, normal.z);
+			//flipeti flip
+			float y = uv.y;
+			y -= 1.0f;
+			y *= -1.0f;
+			glTexCoord2f(uv.x, y);
 
 			// NOTE!
 			// This must be last since GX needs to know
 			// what data goes to vertex before sending the position
 			glVertex3f(position.x, position.y, position.z);
 		}
-		if (mode == Lines)
-		{
-			glEnd();
-		}
-	}
-	if (mode == Textured)
-	{
 		glEnd();
 	}
 }

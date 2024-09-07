@@ -1,72 +1,77 @@
 
 #include "assetmanager.h"
 
-static Mesh* trainMesh;
-static gdl::Image* texture;
-static gdl::Image* roomBg;
-static gdl::Image* houseBg;
-static gdl::Font* ibmFont;
-static gdl::Sound* music;
-static Model* trainModel;
-std::vector<Model*> AssetManager::models;
+static AssetManager* singleton;
 
 bool AssetManager::LoadAssets()
 {
-    // Test fbx loading
-	trainMesh = new Mesh();
-    trainMesh->LoadFile("assets/train.fbx");
-    texture = gdl::LoadImage("assets/train_small_512.png", gdl::TextureFilterModes::Linear);
-	roomBg = gdl::LoadImage("assets/roombg.png", gdl::TextureFilterModes::Linear);
-	houseBg = gdl::LoadImage("assets/housebg.png", gdl::TextureFilterModes::Linear);
-    ibmFont = gdl::LoadFont("assets/font8x16.png", 8, 16, ' ');
-	music = gdl::LoadSound("plink.wav");
+	singleton = new AssetManager();
 
-	trainModel = new Model();
-	trainModel->AddTexturedMesh(trainMesh, texture);
-	models.push_back(trainModel);
+    singleton->ibmFont = gdl::LoadFont("assets/font8x16.png", 8, 16, ' ');
+	singleton->music = gdl::LoadSound("plink.wav");
 
-	return (texture && ibmFont && music && trainModel);
+
+	singleton->models.push_back(LoadModel("assets/train.fbx","assets/train_small_512.png", gdl::Linear));
+	singleton->models.push_back(LoadModel("assets/cassette.fbx", "assets/cassette_text.png", gdl::Nearest));
+	singleton->models.push_back(LoadModel("assets/crt.fbx", "assets/crt_text.png", gdl::Nearest));
+	singleton->models.push_back(LoadModel("assets/camera.fbx", "assets/camera_text.png", gdl::Nearest));
+	singleton->models.push_back(LoadModel("assets/wii_console.fbx", "assets/wii_console_text.png", gdl::Nearest));
+
+	// Load background images
+
+	singleton->images.push_back(gdl::LoadImage("assets/housebg.png", gdl::TextureFilterModes::Linear));
+	singleton->images.push_back(gdl::LoadImage("assets/roombg.png", gdl::TextureFilterModes::Linear));
+
+	return true;
+}
+Model * AssetManager::LoadModel(std::string fbx, std::string png, gdl::TextureFilterModes filter)
+{
+	Mesh* aMesh = new Mesh();
+    aMesh->LoadFile(fbx.c_str());
+	gdl::Image* aTexture = gdl::LoadImage(png.c_str(), filter);
+
+	Model* aModel = new Model();
+	aModel->AddTexturedMesh(aMesh, aTexture);
+	return aModel;
 }
 
 void AssetManager::FreeAssets()
 {
-	delete(trainMesh);
-	delete(texture);
+	delete(singleton);
+}
+
+
+AssetManager::~AssetManager()
+{
 	delete(ibmFont);
 	delete(music);
-	delete(trainModel);
+	for(gdl::Image* image : images)
+	{
+		delete(image);
+	}
+	for(Model* model : models)
+	{
+		delete(model);
+	}
 }
 
-
-gdl::Sound* AssetManager::GetMusic() { return music;}
-gdl::Font* AssetManager::GetDebugFont() {return ibmFont;}
-gdl::Image* AssetManager::GetImage(std::string name)
+gdl::Sound* AssetManager::GetMusic() { return singleton->music;}
+gdl::Font* AssetManager::GetDebugFont() {return singleton->ibmFont;}
+gdl::Image* AssetManager::GetImage(int index)
 {
-	if (name == "train")
+	if (index >=0 && index < (int)singleton->images.size())
 	{
-		return texture;
-	}
-	else if (name == "roombg")
-	{
-		return roomBg;
-	}
-	else if (name == "housebg")
-	{
-		return houseBg;
+		return singleton->images[index];
 	}
 	return nullptr;
-}
-Mesh* AssetManager::GetMesh()
-{
-	return trainMesh;
 }
 
 Model * AssetManager::GetModel(int index)
 {
-	if (index >=0 && index < (int)models.size())
+	if (index >=0 && index < (int)singleton->models.size())
 	{
-		return models[index];
+		return singleton->models[index];
 	}
-	return trainModel;
+	return nullptr;
 }
 
