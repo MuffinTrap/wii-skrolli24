@@ -39,9 +39,20 @@ CXXFLAGS += $(ROCKET_INCLUDE)
 # Set Compiler
 CXX = clang++
 EXE_SUFFIX = .out
-# Homebrew include directory
+
+# Homebrew include directories:
 # This is for MacPorts. Alter to fit your system.
 CXXFLAGS += -I/opt/local/include
+
+# This is for homebrew
+# Intel MacOS brew location
+CXXFLAGS += -I/usr/local/include
+
+# M1 MacOs brew location
+CXXFLAGS += -I/opt/homebrew/include
+
+# Exact locations on M1 mac
+# CXXFLAGS += -I/opt/homebrew/Cellar/libsndfile/1.2.2/include -I/opt/homebrew/Cellar/openal-soft/1.23.1/include -I/opt/homebrew/Cellar/glm/1.0.1/include -I/opt/homebrew/Cellar/libpng/1.6.43/include
 
 # Create a list of libraries that need to be linked
 LDFLAGS = -lmgdl -lpng -lsndfile -lopenal -Wno-unused-function
@@ -51,6 +62,17 @@ LDFLAGS += -framework OpenGL -framework GLUT
 
 # Add MacPorts library path
 LDFLAGS += -L/opt/local/lib
+
+# Add homebrew library paths
+
+# Intel MacOS
+LDFLAGS += -L/usr/local/lib
+
+# M1 MacOs
+LDFLAGS += -L/opt/homebrew/lib
+
+# LDFLAGS = -L/opt/homebrew/Cellar/libsndfile/1.2.2/lib -L/opt/homebrew/Cellar/openal-soft/1.23.1/lib -L/opt/homebrew/opt/glm/lib -L/opt/homebrew/Cellar/libpng/1.6.43/lib
+
 
 # Add mgdl library search directory and include
 MGDL_DIR=$(HOME)/libmgdl
