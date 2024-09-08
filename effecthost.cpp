@@ -84,9 +84,13 @@ void EffectHost::StartDraw3D()
     glViewport(0, 0, gdl::GetScreenWidth(), gdl::GetScreenHeight());
 
 	// NOTE
-	// if GL_DEPTH_BUFFER_BIT is set, nothing is visible
+	// if GL_DEPTH_BUFFER_BIT is set, nothing is visible on Wii
+#ifdef GEKKO
 	glClearDepth(1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+#else
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+#endif
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
