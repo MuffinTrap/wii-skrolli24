@@ -55,7 +55,7 @@ CXXFLAGS += -I/opt/homebrew/include
 # CXXFLAGS += -I/opt/homebrew/Cellar/libsndfile/1.2.2/include -I/opt/homebrew/Cellar/openal-soft/1.23.1/include -I/opt/homebrew/Cellar/glm/1.0.1/include -I/opt/homebrew/Cellar/libpng/1.6.43/include
 
 # Create a list of libraries that need to be linked
-LDFLAGS = -lmgdl -lpng -lsndfile -lopenal -Wno-unused-function
+LDFLAGS = -lmgdl -lpng -lsndfile -Wno-unused-function
 
 # MacOS need to tell to use OpenGL and GLUT instead of -lglut
 LDFLAGS += -framework OpenGL -framework GLUT 
@@ -71,6 +71,7 @@ LDFLAGS += -L/usr/local/lib
 # M1 MacOs
 LDFLAGS += -L/opt/homebrew/lib
 
+LDFLAGS += -framework OpenAL
 # LDFLAGS = -L/opt/homebrew/Cellar/libsndfile/1.2.2/lib -L/opt/homebrew/Cellar/openal-soft/1.23.1/lib -L/opt/homebrew/opt/glm/lib -L/opt/homebrew/Cellar/libpng/1.6.43/lib
 
 
