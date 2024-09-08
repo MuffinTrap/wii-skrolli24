@@ -9,7 +9,7 @@ SRC_DIRS := .
 cpp_src := $(shell find $(SRC_DIRS) -name '*.cpp')
 
 # Setup compilation options
-CXXFLAGS = -Werror=unused-function -Wall -Wextra -Wpedantic -std=c++11 -DSYNC_PLAYER
+CXXFLAGS = -Werror=unused-function -Wall -Wextra -Wpedantic -std=c++11
 
 # Extra compilation options
 # #############################
