@@ -293,6 +293,11 @@ void EffectHost::Draw()
 		glDisable(GL_BLEND);
 	}
 
+	// Rule of thirds guide
+#ifndef SYNC_PLAYER
+	rocketDebug.DrawThirds();
+#endif
+
 #ifdef PROFILING
 	rocketDebug.Draw(AssetManager::GetDebugFont());
 #endif

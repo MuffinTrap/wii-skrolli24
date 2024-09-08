@@ -2,6 +2,7 @@
 
 #include "mgdl-mesh.h"
 #include <vector>
+#include "rocketdebug.h"
 
 enum EffectName
 {
@@ -26,4 +27,5 @@ private:
 	void DrawBackground();
 	void DrawItem();
 	EffectName activeEffect;
+	RocketDebug rocketDebug;
 };

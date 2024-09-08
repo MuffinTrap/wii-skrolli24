@@ -7,6 +7,7 @@ class RocketDebug
 	public:
 	void Init();
 	void Draw(gdl::Font* font);
+	void DrawThirds();
 	void Free();
 	float* frameTimes;
 	float* cpuTimes;

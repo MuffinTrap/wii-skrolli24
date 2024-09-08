@@ -23,6 +23,37 @@ void RocketDebug::Free()
 	free(cpuTimes);
 }
 
+void RocketDebug::DrawThirds()
+{
+	/* Performance metrics */
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, 640.0f, 0.0f, 480.0f, 1.0f, -1.0f);
+
+    // Set the modelview matrix
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+	float third_w = 640.0f/3.0f;
+	float third_h = 480.0f/3.0f;
+
+	glBegin(GL_LINES);
+	PaletteColor4f(GREY, 0.5f);
+	for (int w = 1; w <= 3; w++)
+	{
+		glVertex2f(w*third_w, 480.0f);
+		glVertex2f(w*third_w, 0.0f);
+	}
+	for (int h = 1; h <= 3; h++)
+	{
+		glVertex2f(0.0f, h*third_h);
+		glVertex2f(640.0f, h*third_h);
+	}
+
+	glEnd();
+
+
+}
 
 void RocketDebug::Draw ( gdl::Font* font )
 {
