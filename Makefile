@@ -5,6 +5,9 @@ wii:
 	$(MAKE) -f Makefile_wii.mk
 cleanwii:
 	$(MAKE) -f Makefile_wii.mk clean
+runwii:
+	$(MAKE) -f Makefile_wii.mk run
+
 linux:
 	$(MAKE) -f Makefile_linux.mk
 cleanlinux:

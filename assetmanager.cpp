@@ -8,7 +8,7 @@ bool AssetManager::LoadAssets()
 	singleton = new AssetManager();
 
     singleton->ibmFont = gdl::LoadFont("assets/font8x16.png", 8, 16, ' ');
-	singleton->music = gdl::LoadSound("plink.wav");
+	singleton->music = gdl::LoadSound("assets/plink.wav");
 
 
 	singleton->models.push_back(LoadModel("assets/train.fbx","assets/train_small_512.png", gdl::Linear));

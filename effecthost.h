@@ -23,6 +23,7 @@ public:
 	void Free();
 
 private:
+	void StartDraw3D();
 	void DrawText();
 	void DrawBackground();
 	void DrawItem();

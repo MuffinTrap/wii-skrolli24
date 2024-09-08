@@ -58,28 +58,71 @@ void DrawTitle();
 
 void Init3D()
 {
+	// Set up state
+
+	// Depth testing. This caused problems on NUMBERS
+	// Does not render anyhing with depth test enabled and func as LESS
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+	glDepthMask(GL_TRUE); //  is this needed?
+
+	// This is the other way around on Wii, but
+	// hopefully OpenGX handles it
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+
+    glShadeModel(GL_FLAT);
+
+	glClearColor((float)0xfb/255.0f, (float)0xbb/255.0f, (float)0xad/255.0f, 0.0f);
+
+}
+
+void EffectHost::StartDraw3D()
+{
+	// Do operations
+
     glViewport(0, 0, gdl::GetScreenWidth(), gdl::GetScreenHeight());
+
+	// NOTE
+	// if GL_DEPTH_BUFFER_BIT is set, nothing is visible
+	glClearDepth(1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(75.0, gdl::GetAspectRatio(), 0.1, 100.0);
 
+    // NOTE!!!!
+    // Without this setup the Dolphin is
+    // all messed up with the
+    // rendering
+
+	// Must have gluLookAt for anything to be visible
+	// on Wii when using OpenGX
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-	gluLookAt(0.0f, 0.0f, 0.0f,
-			  0.0, 0.0f, -1.0f,
-			  0.0f, 1.0f, 0.0f);
 
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
+	float cam_x = gdl::RocketSync::GetFloat(camera_X);
+	float cam_y  = gdl::RocketSync::GetFloat(camera_Y);
+	float cam_z = gdl::RocketSync::GetFloat(camera_Z);
+	float cam_rx = gdl::RocketSync::GetFloat(camera_rotX);
+	float cam_ry = gdl::RocketSync::GetFloat(camera_rotY);
+	// Camera position and direction
+	glm::vec4 cameraPos = glm::vec4(cam_x, cam_y, cam_z, 1.0f);
+	glm::mat4 rotationMatrixY(1);
+	rotationMatrixY = glm::rotate(rotationMatrixY, glm::radians(cam_ry), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 rotationMatrixX(1);
+	rotationMatrixX = glm::rotate(rotationMatrixX, glm::radians(cam_rx), glm::vec3(1.0f, 0.0f, 0.0f));
+	glm::vec4 cameraDir = rotationMatrixY * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f);
+	cameraDir = rotationMatrixX * cameraDir;
+	glm::vec4 cameraTarget = cameraPos + cameraDir;
+	gluLookAt(cameraPos.x, cameraPos.y, cameraPos.z,
+				 cameraTarget.x, cameraTarget.y, cameraTarget.z,
+				 0.0f, 1.0f, 0.0f);
 
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glShadeModel(GL_FLAT);
-
-	glClearColor((float)0xfb/255.0f, (float)0xbb/255.0f, (float)0xad/255.0f, 0.0f);
-    //glClearColor(247.0f/255.0f, 1.0f, 174.0f/255.0f, 0.0f);
+    // End of setup
 }
+
 
 void Init2D()
 {
@@ -221,34 +264,7 @@ void EffectHost::DrawItem()
 
 void EffectHost::Draw()
 {
-    // NOTE!!!!
-    // Without this setup the Dolphin is
-    // all messed up with the
-    // rendering
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    Init3D();
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-	float cam_x = gdl::RocketSync::GetFloat(camera_X);
-	float cam_y  = gdl::RocketSync::GetFloat(camera_Y);
-	float cam_z = gdl::RocketSync::GetFloat(camera_Z);
-	float cam_rx = gdl::RocketSync::GetFloat(camera_rotX);
-	float cam_ry = gdl::RocketSync::GetFloat(camera_rotY);
-	// Camera position and direction
-	glm::vec4 cameraPos = glm::vec4(cam_x, cam_y, cam_z, 1.0f);
-	glm::mat4 rotationMatrixY(1);
-	rotationMatrixY = glm::rotate(rotationMatrixY, glm::radians(cam_ry), glm::vec3(0.0f, 1.0f, 0.0f));
-	glm::mat4 rotationMatrixX(1);
-	rotationMatrixX = glm::rotate(rotationMatrixX, glm::radians(cam_rx), glm::vec3(1.0f, 0.0f, 0.0f));
-	glm::vec4 cameraDir = rotationMatrixY * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f);
-	cameraDir = rotationMatrixX * cameraDir;
-	glm::vec4 cameraTarget = cameraPos + cameraDir;
-	gluLookAt(cameraPos.x, cameraPos.y, cameraPos.z,
-				 cameraTarget.x, cameraTarget.y, cameraTarget.z,
-				 0.0f, 1.0f, 0.0f);
-
-    // End of setup
+    StartDraw3D();
 
 	switch(activeEffect)
 	{
