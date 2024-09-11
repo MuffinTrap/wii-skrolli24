@@ -8,7 +8,6 @@ bool AssetManager::LoadAssets()
 	singleton = new AssetManager();
 
     singleton->ibmFont = gdl::LoadFont("assets/font8x16.png", 8, 16, ' ');
-	singleton->music = gdl::LoadSound("assets/plink.wav");
 
 
 	singleton->models.push_back(LoadModel("assets/train.fbx","assets/train_small_512.png", gdl::Linear));
@@ -21,6 +20,15 @@ bool AssetManager::LoadAssets()
 
 	singleton->images.push_back(gdl::LoadImage("assets/housebg.png", gdl::TextureFilterModes::Linear));
 	singleton->images.push_back(gdl::LoadImage("assets/roombg.png", gdl::TextureFilterModes::Linear));
+
+#ifdef GEKKO
+	#ifdef SYNC_PLAYER
+		singleton->music = gdl::LoadOgg("assets/chillstep.ogg");
+	#endif
+#else
+	singleton->music = gdl::LoadSound("assets/chillstep.wav");
+#endif
+
 
 	return true;
 }

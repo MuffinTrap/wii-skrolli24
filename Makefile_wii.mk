@@ -63,8 +63,6 @@ LIBDIRS	:=
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 #---------------------------------------------------------------------------------
 
-export OUTPUT	:=	$(CURDIR)/$(TARGET)
-
 export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
 					$(foreach dir,$(DATA),$(CURDIR)/$(dir)) \
 					$(foreach dir,$(TEXTURES),$(CURDIR)/$(dir))
@@ -132,6 +130,7 @@ all: $(BUILD)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile_wii.mk
+	@mv $(OUTPUT).dol boot.dol
 
 #---------------------------------------------------------------------------------
 clean:
