@@ -58,3 +58,6 @@ build/
 # on pc exports
 *.track
 
+
+# Linux png meta files
+*.png~

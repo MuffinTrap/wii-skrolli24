@@ -15,11 +15,26 @@ bool Mesh::LoadFile(std::string fbxFile)
 	scene = ufbx_load_file(fbxFile.c_str(), &opts, &error);
 	gdl_assert_printf(scene != nullptr, "Cannot load fbx: %s\n", error.description.data);
 
+	mesh1 = nullptr;
+	mesh2 = nullptr;
 	for (ufbx_node* node : scene->nodes)
 	{
-		printf("Found node %s\n", node->name.data);
 		// try to get the mesh of this node
-		mesh = node->mesh;
+		ufbx_mesh* m = node->mesh;
+		if (m != nullptr)
+		{
+			printf("Found mesh node %s\n", node->name.data);
+			if (mesh1 == nullptr)
+			{
+				printf("Stored to mesh 1\n");
+				mesh1 = node->mesh;
+			}
+			else
+			{
+				printf("Stored to mesh 2\n");
+				mesh2 = node->mesh;
+			}
+		}
 	}
 	printf("Mesh loaded\n");
 
@@ -27,16 +42,22 @@ bool Mesh::LoadFile(std::string fbxFile)
 	return true;
 }
 
-ufbx_vec3 Mesh::GetVertex(size_t index)
-{
-	return mesh->vertex_position[index];
-}
 void Mesh::DrawImmediate()
+{
+	if (mesh1 != nullptr)
+	{
+		DrawMesh(mesh1);
+	}
+	if (mesh2 != nullptr)
+	{
+		DrawMesh(mesh2);
+	}
+}
+void Mesh::DrawMesh(ufbx_mesh* mesh)
 {
 	glColor3f(1.0f, 1.0f, 1.0f);
 	for(ufbx_face face : mesh->faces)
 	{
-
 		if (face.num_indices == 3)
 		{
 			glBegin(GL_TRIANGLES);

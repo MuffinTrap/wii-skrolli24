@@ -8,8 +8,12 @@
 		<track name="item_visible">
 			<key interpolation="0" value="-1" row="0"/>
 			<key interpolation="0" value="1" row="24"/>
+			<key interpolation="0" value="2" row="28"/>
+			<key interpolation="0" value="3" row="34"/>
 			<key interpolation="0" value="2" row="40"/>
-			<key interpolation="0" value="3" row="56"/>
+			<key interpolation="0" value="4" row="42"/>
+			<key interpolation="0" value="5" row="49"/>
+			<key interpolation="0" value="6" row="56"/>
 			<key interpolation="0" value="4" row="72"/>
 		</track>
 		<track name="image_visible">
@@ -43,7 +47,7 @@
 		</track>
 		<track name="item:rotX">
 			<key interpolation="0" value="0" row="0"/>
-			<key interpolation="1" value="90" row="24"/>
+			<key interpolation="1" value="0" row="24"/>
 			<key interpolation="0" value="0" row="40"/>
 			<key interpolation="0" value="0" row="72"/>
 		</track>
@@ -52,7 +56,8 @@
 			<key interpolation="1" value="0" row="24"/>
 			<key interpolation="0" value="180" row="39"/>
 			<key interpolation="1" value="0" row="40"/>
-			<key interpolation="0" value="180" row="55"/>
+			<key interpolation="1" value="180" row="49"/>
+			<key interpolation="0" value="0" row="55"/>
 			<key interpolation="1" value="0" row="56"/>
 			<key interpolation="0" value="180" row="71"/>
 			<key interpolation="1" value="0" row="72"/>
@@ -84,9 +89,12 @@
 			<key interpolation="1" value="0.0099999998" row="3"/>
 			<key interpolation="0" value="0.80000001" row="15"/>
 			<key interpolation="0" value="0.2" row="24"/>
-			<key interpolation="0" value="0.69999999" row="40"/>
-			<key interpolation="0" value="0.2" row="56"/>
-			<key interpolation="0" value="0.25" row="72"/>
+			<key interpolation="0" value="0.2" row="40"/>
+			<key interpolation="0" value="2" row="42"/>
+			<key interpolation="0" value="2" row="43"/>
+			<key interpolation="0" value="3" row="50"/>
+			<key interpolation="0" value="2" row="56"/>
+			<key interpolation="0" value="3" row="72"/>
 		</track>
 		<track name="image:X">
 			<key interpolation="0" value="0" row="0"/>

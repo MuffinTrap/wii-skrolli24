@@ -10,16 +10,25 @@ bool AssetManager::LoadAssets()
     singleton->ibmFont = gdl::LoadFont("assets/font8x16.png", 8, 16, ' ');
 
 
-	singleton->models.push_back(LoadModel("assets/train.fbx","assets/train_small_512.png", gdl::Linear));
-	singleton->models.push_back(LoadModel("assets/cassette.fbx", "assets/cassette_text.png", gdl::Nearest));
+	// Placeholders
 	singleton->models.push_back(LoadModel("assets/crt.fbx", "assets/crt_text.png", gdl::Nearest));
 	singleton->models.push_back(LoadModel("assets/camera.fbx", "assets/camera_text.png", gdl::Nearest));
 	singleton->models.push_back(LoadModel("assets/wii_console.fbx", "assets/wii_console_text.png", gdl::Nearest));
+
+	// Ready
+	singleton->models.push_back(LoadModel("assets/train.fbx","assets/train_small_512.png", gdl::Linear));
+	// missing textures
+	singleton->models.push_back(LoadModel("assets/cassette.fbx", "assets/test_texture.png", gdl::Nearest));
+	singleton->models.push_back(LoadModel("assets/powermac.fbx", "assets/test_texture.png", gdl::Nearest));
+	singleton->models.push_back(LoadModel("assets/boombox.fbx", "assets/test_texture.png", gdl::Nearest));
 
 	// Load background images
 
 	singleton->images.push_back(gdl::LoadImage("assets/housebg.png", gdl::TextureFilterModes::Linear));
 	singleton->images.push_back(gdl::LoadImage("assets/roombg.png", gdl::TextureFilterModes::Linear));
+	singleton->images.push_back(gdl::LoadImage("assets/front.png", gdl::TextureFilterModes::Linear));
+	singleton->images.push_back(gdl::LoadImage("assets/behind.png", gdl::TextureFilterModes::Linear));
+	singleton->images.push_back(gdl::LoadImage("assets/facebg.png", gdl::TextureFilterModes::Linear));
 
 #ifdef GEKKO
 	#ifdef SYNC_PLAYER
