@@ -19,6 +19,8 @@ void DrawModel();
 void DrawTitle();
 
 #ifndef SYNC_PLAYER
+    const struct sync_track *scene_number;  // This is just to help with direction and not used
+
     const struct sync_track *effect_active;  // Which effect is active.
     const struct sync_track *item_visible;  // Which item is shown
     const struct sync_track *image_visible;  // Which image is shown
@@ -37,6 +39,7 @@ void DrawTitle();
     const struct sync_track *item_rotY;  // around Y
     const struct sync_track *item_rotZ;  // around Z
     const struct sync_track *item_scale;  //
+    const struct sync_track *item_texture;  //
 
     const struct sync_track *image_X;  // Camera Offset to Origo X
     const struct sync_track *image_Y;  // Offset to Origo Y
@@ -44,6 +47,7 @@ void DrawTitle();
     const struct sync_track *image_scale;  // Offset to Origo Z
 
     const struct sync_track *fade_A;	// Fade alpha. 0 clear 1 black screen
+    const struct sync_track *fade_color;	// Fade alpha. 0 clear 1 black screen
 
 #else
     // This is for the wii version.
@@ -73,13 +77,16 @@ void Init3D()
 
     glShadeModel(GL_FLAT);
 
-	glClearColor((float)0xfb/255.0f, (float)0xbb/255.0f, (float)0xad/255.0f, 0.0f);
+	//glClearColor((float)0xfb/255.0f, (float)0xbb/255.0f, (float)0xad/255.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 }
 
 void EffectHost::StartDraw3D()
 {
 	// Do operations
+	ColorName fadeName = (ColorName)gdl::RocketSync::GetInt(fade_color);
+	PaletteClearColor3f(fadeName);
 
     glViewport(0, 0, gdl::GetScreenWidth(), gdl::GetScreenHeight());
 
@@ -142,6 +149,8 @@ EffectHost::EffectHost()
 void EffectHost::Init()
 {
 #ifndef SYNC_PLAYER
+	effect_active = gdl::RocketSync::GetTrack("scene_number", false);
+
 	effect_active = gdl::RocketSync::GetTrack("effect_active");
 	item_visible = gdl::RocketSync::GetTrack( "item_visible");
 	image_visible = gdl::RocketSync::GetTrack( "image_visible");
@@ -160,6 +169,7 @@ void EffectHost::Init()
 	item_rotY = gdl::RocketSync::GetTrack( "item:rotY");
 	item_rotZ = gdl::RocketSync::GetTrack( "item:rotZ");
 	item_scale = gdl::RocketSync::GetTrack( "item:scale");
+	item_texture = gdl::RocketSync::GetTrack( "item:texture");
 
 	image_X = gdl::RocketSync::GetTrack("image:X");
 	image_Y = gdl::RocketSync::GetTrack("image:Y");
@@ -167,10 +177,12 @@ void EffectHost::Init()
 	image_scale = gdl::RocketSync::GetTrack("image:scale");
 
 	fade_A = gdl::RocketSync::GetTrack( "fade_A");
+	fade_color = gdl::RocketSync::GetTrack( "fade_color");
 
 #endif
 
 	activeEffect = fxTitle;
+	quitRequested = false;
 	Init3D();
 	printf("host init done\n");
 }
@@ -195,8 +207,10 @@ void EffectHost::Update ()
 void EffectHost::DrawText()
 {
 	gdl::Font* f = AssetManager::GetDebugFont();
+	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, -1.0f);
 	f->Printf(0x333f58FF, 0.2f, gdl::LJustify, gdl::LJustify, "Objects of\nSentimental Value\nSpinning to\nChillstep");
+	glPopMatrix();
 }
 
 void EffectHost::DrawBackground()
@@ -211,6 +225,9 @@ void EffectHost::DrawBackground()
 	{
 		return;
 	}
+    glEnable(GL_ALPHA_TEST);
+    glAlphaFunc(GL_GREATER, 0.3f);
+
 	glPushMatrix();
 	glTranslatef(
 		gdl::RocketSync::GetFloat(image_X),
@@ -220,6 +237,46 @@ void EffectHost::DrawBackground()
 	glScalef(s, s, 1.0f);
 	bg->Draw3D(1.0f, gdl::LJustify, gdl::LJustify);
 	glPopMatrix();
+
+	glDisable(GL_ALPHA_TEST);
+}
+
+void EffectHost::DrawImage()
+{
+	// draw the selected item
+	int itemIndex = gdl::RocketSync::GetInt(item_visible);
+	if (itemIndex<0)
+	{
+		return;
+	}
+	gdl::Image* model = AssetManager::GetImage(itemIndex);
+	if (model == nullptr)
+	{
+		return;
+	}
+
+	float mx = gdl::RocketSync::GetFloat(item_X);
+	float my = gdl::RocketSync::GetFloat(item_Y);
+	float mz = gdl::RocketSync::GetFloat(item_Z);
+	float mrx = gdl::RocketSync::GetFloat(item_rotX);
+	float mry = gdl::RocketSync::GetFloat(item_rotY);
+	float mrz = gdl::RocketSync::GetFloat(item_rotZ);
+	float is = gdl::RocketSync::GetFloat(item_scale);
+
+
+    glEnable(GL_ALPHA_TEST);
+    glAlphaFunc(GL_GREATER, 0.3f);
+    glPushMatrix();
+		glTranslatef(mx, my, mz);
+		glRotatef(mrx, 1.0f, 0.0f, 0.0f);
+		glRotatef(mry, 0.0f, 1.0f, 0.0f);
+		glRotatef(mrz, 0.0f, 0.0f, 1.0f);
+		glScalef(is, is, 1.0f);
+
+		model->Draw3D(1.0f, gdl::LJustify, gdl::LJustify);
+    glPopMatrix();
+    glDisable(GL_ALPHA_TEST);
+
 }
 
 void EffectHost::DrawItem()
@@ -252,17 +309,8 @@ void EffectHost::DrawItem()
 		glRotatef(mrz, 0.0f, 0.0f, 1.0f);
 		glScalef(is, is, is);
 
-		model->Draw();
+		model->Draw(gdl::RocketSync::GetInt(item_texture));
     glPopMatrix();
-
-    // TODO: Change font and image default
-    // rendering to CCW
-	/*
-    glPushMatrix();
-        glTranslatef(00.0f, -00.0f, -1.0f);
-        AssetManager::GetDebugFont()->Printf(gdl::Colors::Black, 0.2f, gdl::LJustify, gdl::LJustify, "scale:%.1f", is);
-    glPopMatrix();
-    */
 }
 
 
@@ -281,37 +329,22 @@ void EffectHost::Draw()
 			DrawBackground();
 			DrawItem();
 			break;
+		case fxBgAndImage:
+			DrawBackground();
+			DrawImage();
+			break;
+		case fxCredits:
+			// nothing yet
+			break;
 		case fxQUIT_DEMO:
-			// TODO quit demo
+			quitRequested = true;
 		default:
 			// nop
 			break;
 	};
 
 
-	float fade = gdl::RocketSync::GetFloat(fade_A);
-	if (fade > 0.0f)
-	{
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		float W = gdl::GetScreenWidth();
-		float H = gdl::GetScreenHeight();
-		glOrtho(0, W, H, 0.0f, 1.0f, -1.0f);
-
-		// Set the modelview matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		glBegin(GL_QUADS);
-			PaletteColor4f(BLACK, fade);
-			glVertex3f(0.0f, 0.0f, 0.9999f);
-			glVertex3f(W, 0.0f, 0.9999f);
-			glVertex3f(W, H, 0.9999f);
-			glVertex3f(0.0f, H, 0.9999f);
-		glEnd();
-		glDisable(GL_BLEND);
-	}
+	DrawFade();
 
 	// Rule of thirds guide
 #ifndef SYNC_PLAYER
@@ -322,4 +355,53 @@ void EffectHost::Draw()
 	rocketDebug.Draw(AssetManager::GetDebugFont());
 #endif
 }
+
+void EffectHost::DrawFade()
+{
+	float fade = gdl::RocketSync::GetFloat(fade_A);
+	if (fade > 0.0f)
+	{
+		float W = gdl::GetScreenWidth();
+		float H = gdl::GetScreenHeight();
+
+		/*
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, W,  // left, right
+				H, 0.0f,  // top bottom
+		  1.0f, -1.0f);  // near far
+		  */
+
+		// Set the modelview matrix
+		/*
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+
+		glAlphaFunc(GL_ALWAYS, 0.0f);
+
+
+		glViewport(0, 0, gdl::GetScreenWidth(), gdl::GetScreenHeight());
+		*/
+
+		//glTranslatef(0.0f, 0.0f, -1.0f);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
+
+		glBegin(GL_QUADS);
+		//glTranslatef(0.0f, 0.0f, -1.0f);
+			ColorName fadeName = (ColorName)gdl::RocketSync::GetInt(fade_color);
+			PaletteColor4f(fadeName, fade);
+			glVertex3f(-W, H, -0.9999f);
+			glVertex3f(-W, -H, -0.9999f);
+			glVertex3f(W, -H, -0.9999f);
+			glVertex3f(W, H, -0.9999f);
+		glEnd();
+		glDisable(GL_BLEND);
+
+	}
+
+}
+
 

@@ -33,6 +33,7 @@ bool Mesh::LoadFile(std::string fbxFile)
 			{
 				printf("Stored to mesh 2\n");
 				mesh2 = node->mesh;
+				mesh2Offset = glm::vec3(0,0,0);
 			}
 		}
 	}
@@ -50,7 +51,11 @@ void Mesh::DrawImmediate()
 	}
 	if (mesh2 != nullptr)
 	{
+		glPushMatrix();
+		glTranslatef(mesh2Offset.x, mesh2Offset.y, mesh2Offset.y);
 		DrawMesh(mesh2);
+
+		glPopMatrix();
 	}
 }
 void Mesh::DrawMesh(ufbx_mesh* mesh)

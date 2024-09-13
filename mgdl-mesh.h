@@ -2,6 +2,8 @@
 
 #include <string>
 #include <mgdl/mgdl-types.h>
+#include <glm/glm.hpp>
+
 
 #include "ufbx.h"
 
@@ -19,6 +21,7 @@ public:
 	static void DrawQuad();
 	static void DrawBox();
 private:
+	glm::vec3 mesh2Offset; // For the PC monitor
 	void DrawMesh(ufbx_mesh* mesh);
 
 };

@@ -18,10 +18,12 @@ extern const sync_track item_rotX;
 extern const sync_track item_rotY;
 extern const sync_track item_rotZ;
 extern const sync_track item_scale;
+extern const sync_track item_texture;
 extern const sync_track image_X;
 extern const sync_track image_Y;
 extern const sync_track image_Z;
 extern const sync_track image_scale;
 extern const sync_track fade_A;
+extern const sync_track fade_color;
 #endif
  // SYNC_PLAYER

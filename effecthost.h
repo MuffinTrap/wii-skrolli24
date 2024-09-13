@@ -6,8 +6,10 @@
 
 enum EffectName
 {
-	fxTitle = 0,
+	fxTitle = 0, 	// Show the logo or something special
 	fxBgAndItem = 1,
+	fxBgAndImage = 2,
+	fxCredits = 3, // In case no cassette/floppy credits
 	//////////////////////////
 	fxQUIT_DEMO = 999
 };
@@ -21,12 +23,15 @@ public:
 	void Draw();
 	void Save();
 	void Free();
+	bool quitRequested;
 
 private:
 	void StartDraw3D();
 	void DrawText();
+	void DrawImage();
 	void DrawBackground();
 	void DrawItem();
+	void DrawFade();
 	EffectName activeEffect;
 	RocketDebug rocketDebug;
 };

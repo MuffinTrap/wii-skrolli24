@@ -58,6 +58,8 @@ build/
 # on pc exports
 *.track
 
+# Krita files
+*.kra
 
 # Linux png meta files
 *.png~

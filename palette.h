@@ -2,10 +2,12 @@
 
 enum ColorName
 {
-	BLACK,
-	GREY,
-	WHITE,
-	ORANGE
+	BLACK = 0,
+	GREY = 1,
+	WHITE = 2,
+	ORANGE = 3,
+	SKYBLUE = 4,
+	WALLGREEN = 5
 };
 
 struct Col

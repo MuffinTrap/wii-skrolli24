@@ -11,6 +11,8 @@ static Col Black = {0.133f, 0.137f, 0.137f};
 static Col Grey = {0.612f, 0.616f, 0.612f};
 static Col White = {0.941f, 0.965f, 0.941f};
 static Col Orange = {0.941f, 0.502f, 0.137f};
+static Col SkyBlue = {162.0f/255.f, 213.0f/255.0f, 229.0f/255.0f};
+static Col WallGreen = {235.0f/255.0f, 1.0f, 168.0f/255.0f};
 
 const Col& GetColor(ColorName name)
 {
@@ -23,6 +25,10 @@ const Col& GetColor(ColorName name)
 		case WHITE: return White;
 			break;
 		case ORANGE: return Orange;
+			break;
+		case SKYBLUE: return SkyBlue;
+			break;
+		case WALLGREEN: return WallGreen;
 			break;
 		default: return White;
 		break;

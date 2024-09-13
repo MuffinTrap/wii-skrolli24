@@ -31,7 +31,7 @@ void init()
         gdl::DoProgramExit();
     }
 
-    bool rocketInit = gdl::RocketSync::InitRocket(AssetManager::GetMusic(), 120, 4);
+    bool rocketInit = gdl::RocketSync::InitRocket(AssetManager::GetMusic(), 50, 8);
     if (rocketInit == false)
     {
         gdl::DoProgramExit();
@@ -52,8 +52,18 @@ void render()
 // Called before render()
 void update()
 {
-    if (gdl::GetController(0).ButtonPress(gdl::WiiButtons::ButtonHome))
+    bool qr = host.quitRequested;
+#ifndef SYNC_PLAYER
+    if (qr)
     {
+        qr = false;
+    }
+#endif
+    if (gdl::GetController(0).ButtonPress(gdl::WiiButtons::ButtonHome) || qr)
+    {
+        gdl::Sound* music = AssetManager::GetMusic();
+        music->Stop();
+        host.Free();
         gdl::Platform& plat = gdl::Platform::GetPlatform();
         plat.DoProgramExit();
     }

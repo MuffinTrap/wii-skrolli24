@@ -13,7 +13,8 @@ class Model
 {
 public:
 	void AddTexturedMesh(Mesh* meshIn, gdl::Image* imageIn);
-	void Draw();
+	void AddTexture(gdl::Image* imageIn);
+	void Draw(int texture = 0);
 	std::vector<Mesh*> meshes;
 	std::vector<gdl::Image*> textures;
 
