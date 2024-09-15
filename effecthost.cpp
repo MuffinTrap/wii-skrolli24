@@ -149,7 +149,7 @@ EffectHost::EffectHost()
 void EffectHost::Init()
 {
 #ifndef SYNC_PLAYER
-	effect_active = gdl::RocketSync::GetTrack("scene_number", false);
+	scene_number = gdl::RocketSync::GetTrack("scene_number", false);
 
 	effect_active = gdl::RocketSync::GetTrack("effect_active");
 	item_visible = gdl::RocketSync::GetTrack( "item_visible");

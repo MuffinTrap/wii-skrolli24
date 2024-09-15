@@ -190,6 +190,7 @@ gdl::RocketSync & gdl::RocketSync::GetSingleton()
 // Call when the music should start
 void gdl::RocketSync::Play()
 {
+    gdl_assert_print(instance->music != nullptr, "No music loaded");
     instance->music->Play();
     instance->syncState = SyncPlay;
 }
