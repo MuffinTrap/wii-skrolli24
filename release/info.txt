@@ -1,0 +1,43 @@
+A keir for summer's end
+
+Demo for Nintendo Wii by Marmot.
+
+Released at Skrolli Party 2024
+14.9.2024
+
+
+Credits:
+
+Code, design and direction: muffintrap
+Room background: MuffinHop
+3D Models: RaccoonViolet
+Textures: Vurpo
+Music by: MIT-RICH @ Jamendo
+
+
+Background:
+I got an idea of making a demo featuring the melancholy of the part in Life is Strange game, where Max goes to the alternative timeline where Chloe is disabled by a car crash. Max wished everything to stay the same as in their childhood but when she meets Chloe and visits her old room, it is all changed.
+
+I cut together a video showing the idea: you can see it here in YouTube.
+https://youtu.be/u12Zhr9rbfA
+
+Later in the progress, when thinking about a name for the demo I found this word in the Dictionary of Obscure Sorrows, that captured the feeling I was going after.
+
+"keir"
+n. an ill-fated attempt to reenact a beloved memory years later, returning to a place that once felt like home, only to find it now feels uncannily off, like walking through a wax museum of your own childhood.
+
+https://www.thedictionaryofobscuresorrows.com/word/keir
+
+
+We did have original music made by Vurpo, but no time to sync the demo to it so the placeholder music was kept. You can visit the artist's Jamendo page here:
+https://www.jamendo.com/track/1842757/inspiring-soft-chillstep
+
+Source code for the demo can be found in github:
+https://github.com/MuffinTrap/wii-skrolli24
+
+The demo uses the muffintrap fork of the mtek-gdl library:
+https://github.com/MuffinTrap/mtek-gdl
+
+- muffintrap
+
+

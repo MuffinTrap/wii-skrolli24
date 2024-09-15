@@ -7,35 +7,35 @@ bool AssetManager::LoadAssets()
 {
 	singleton = new AssetManager();
 
-    singleton->ibmFont = gdl::LoadFont("assets/font8x16.png", 8, 16, ' ');
+    //singleton->ibmFont = gdl::LoadFont("assets/font8x16.png", 8, 16, ' ');
 
 	// Items:
 	// 0 imogen
-	singleton->models.push_back(LoadModel("assets/train.fbx","assets/train_small_512.png", gdl::Linear));
+	singleton->models.push_back(LoadModel("assets/train.fbx","assets/train_cut.png", gdl::Linear));
 	// 1 cassette
-	singleton->models.push_back(LoadModel("assets/tape.fbx", "assets/tape.png", gdl::Nearest));
+	singleton->models.push_back(LoadModel("assets/tape_fixed.fbx", "assets/tape_cut.png", gdl::Linear));
 	// 2 boombox
-	singleton->models.push_back(LoadModel("assets/boombox.fbx", "assets/boombox.png", gdl::Nearest));
+	singleton->models.push_back(LoadModel("assets/boombox.fbx", "assets/boombox_cut.png", gdl::Linear));
 	// 3 crt
-	singleton->models.push_back(LoadModel("assets/crt.fbx", "assets/crt_text.png", gdl::Nearest));
+	//singleton->models.push_back(LoadModel("assets/crt.fbx", "assets/crt_text.png", gdl::Nearest));
 
 	// 4 wii
 
-	Model* wiiModel = LoadModel("assets/wii_console.fbx", "assets/wii-on.png", gdl::Nearest);
-	//wiiModel->AddTexture(gdl::LoadImage("assets/wii-on.png", gdl::Nearest));
+	Model* wiiModel = LoadModel("assets/wii_fixed.fbx", "assets/wii-off_cut.png", gdl::Linear);
+	wiiModel->AddTexture(gdl::LoadImage("assets/wii-on_cut.png", gdl::Linear));
 	singleton->models.push_back(wiiModel);
 
 	// 5: PC
-	singleton->models.push_back(LoadModel("assets/powermac.fbx", "assets/powermac.png", gdl::Nearest));
+	singleton->models.push_back(LoadModel("assets/powermac.fbx", "assets/powermac_cut.png", gdl::Linear));
 	// 6: Door
-	singleton->models.push_back(LoadModel("assets/door.fbx", "assets/door_texture.png", gdl::Nearest));
+	singleton->models.push_back(LoadModel("assets/door_fixed.fbx", "assets/door_cut.png", gdl::Linear));
 
-	Model* floppyModel = LoadModel("assets/floppy.fbx", "assets/credits-muffintrap.png", gdl::Nearest);
+	Model* floppyModel = LoadModel("assets/floppy_fixed.fbx", "assets/credits-muffintrap_cut.png", gdl::Linear);
 
-	floppyModel->AddTexture(gdl::LoadImage("assets/credits-muffinhop.png", gdl::Nearest));
-	floppyModel->AddTexture(gdl::LoadImage("assets/credits-raccoonviolet.png", gdl::Nearest));
-	floppyModel->AddTexture(gdl::LoadImage("assets/credits-vurpo.png", gdl::Nearest));
-	floppyModel->AddTexture(gdl::LoadImage("assets/credits-music.png", gdl::Nearest));
+	floppyModel->AddTexture(gdl::LoadImage("assets/credits-muffinhop_cut.png", gdl::Linear));
+	floppyModel->AddTexture(gdl::LoadImage("assets/credits-raccoonviolet_cut.png", gdl::Linear));
+	floppyModel->AddTexture(gdl::LoadImage("assets/credits-vurpo_cut.png", gdl::Linear));
+	floppyModel->AddTexture(gdl::LoadImage("assets/credits-music_cut.png", gdl::Linear));
 	singleton->models.push_back(floppyModel);
 
 
@@ -61,7 +61,6 @@ bool AssetManager::LoadAssets()
 	singleton->images.push_back(gdl::LoadImage("assets/logotext.png", gdl::TextureFilterModes::Linear));
 	singleton->images.push_back(gdl::LoadImage("assets/doorface.png", gdl::TextureFilterModes::Linear));
 
-	/*
 #ifdef GEKKO
 	#ifdef SYNC_PLAYER
 		singleton->music = gdl::LoadOgg("assets/chillstep.ogg");
@@ -69,9 +68,6 @@ bool AssetManager::LoadAssets()
 #else
 	singleton->music = gdl::LoadSound("assets/chillstep.wav");
 #endif
-*/
-
-	singleton->music = gdl::LoadSound("assets/chillstep.wav");
 
 	return true;
 }

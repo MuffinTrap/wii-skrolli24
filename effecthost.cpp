@@ -206,11 +206,6 @@ void EffectHost::Update ()
 
 void EffectHost::DrawText()
 {
-	gdl::Font* f = AssetManager::GetDebugFont();
-	glPushMatrix();
-	glTranslatef(0.0f, 0.0f, -1.0f);
-	f->Printf(0x333f58FF, 0.2f, gdl::LJustify, gdl::LJustify, "Objects of\nSentimental Value\nSpinning to\nChillstep");
-	glPopMatrix();
 }
 
 void EffectHost::DrawBackground()

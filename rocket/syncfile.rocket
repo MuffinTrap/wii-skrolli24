@@ -26,13 +26,12 @@
 			<key interpolation="0" value="1" row="296"/>
 			<key interpolation="0" value="1" row="312"/>
 			<key interpolation="0" value="2" row="336"/>
-			<key interpolation="0" value="4" row="408"/>
-			<key interpolation="0" value="4" row="416"/>
-			<key interpolation="0" value="4" row="448"/>
+			<key interpolation="0" value="3" row="416"/>
+			<key interpolation="0" value="3" row="448"/>
 			<key interpolation="0" value="-1" row="504"/>
-			<key interpolation="0" value="5" row="512"/>
-			<key interpolation="0" value="7" row="576"/>
-			<key interpolation="0" value="6" row="641"/>
+			<key interpolation="0" value="4" row="512"/>
+			<key interpolation="0" value="6" row="576"/>
+			<key interpolation="0" value="5" row="641"/>
 			<key interpolation="0" value="-1" row="672"/>
 			<key interpolation="0" value="6" row="673"/>
 			<key interpolation="0" value="-1" row="704"/>
@@ -81,8 +80,10 @@
 			<key interpolation="1" value="1" row="639"/>
 			<key interpolation="1" value="1" row="651"/>
 			<key interpolation="0" value="0" row="659"/>
-			<key interpolation="1" value="0" row="670"/>
-			<key interpolation="1" value="1" row="673"/>
+			<key interpolation="1" value="0" row="666"/>
+			<key interpolation="1" value="0" row="671"/>
+			<key interpolation="1" value="1" row="672"/>
+			<key interpolation="0" value="0" row="674"/>
 			<key interpolation="0" value="0" row="680"/>
 			<key interpolation="1" value="0" row="699"/>
 			<key interpolation="1" value="1" row="703"/>
@@ -202,10 +203,9 @@
 			<key interpolation="0" value="13" row="576"/>
 			<key interpolation="1" value="13" row="630"/>
 			<key interpolation="0" value="14" row="632"/>
-			<key interpolation="1" value="22" row="641"/>
-			<key interpolation="0" value="22.699999" row="655"/>
-			<key interpolation="1" value="22" row="664"/>
-			<key interpolation="0" value="9" row="671"/>
+			<key interpolation="2" value="22" row="641"/>
+			<key interpolation="3" value="19" row="654"/>
+			<key interpolation="0" value="-4" row="671"/>
 			<key interpolation="2" value="52" row="673"/>
 			<key interpolation="0" value="53" row="703"/>
 			<key interpolation="1" value="10" row="704"/>
@@ -256,6 +256,7 @@
 			<key interpolation="0" value="85" row="394"/>
 			<key interpolation="1" value="110" row="410"/>
 			<key interpolation="1" value="180" row="440"/>
+			<key interpolation="0" value="0" row="488"/>
 			<key interpolation="0" value="-1" row="504"/>
 			<key interpolation="1" value="-90" row="512"/>
 			<key interpolation="1" value="90" row="536"/>
@@ -268,9 +269,9 @@
 			<key interpolation="0" value="0" row="612"/>
 			<key interpolation="0" value="0" row="616"/>
 			<key interpolation="0" value="10" row="632"/>
-			<key interpolation="1" value="180" row="640"/>
-			<key interpolation="3" value="180" row="656"/>
-			<key interpolation="0" value="73" row="664"/>
+			<key interpolation="1" value="0" row="640"/>
+			<key interpolation="2" value="0" row="648"/>
+			<key interpolation="0" value="90" row="671"/>
 			<key interpolation="0" value="0" row="672"/>
 		</track>
 		<track name="item:rotZ">
@@ -348,8 +349,8 @@
 			<key interpolation="3" value="30" row="627"/>
 			<key interpolation="1" value="32" row="634"/>
 			<key interpolation="0" value="200" row="635"/>
-			<key interpolation="0" value="0" row="640"/>
-			<key interpolation="0" value="7" row="641"/>
+			<key interpolation="0" value="-12" row="640"/>
+			<key interpolation="0" value="-5" row="641"/>
 			<key interpolation="0" value="-11" row="672"/>
 		</track>
 		<track name="item:Y">
@@ -387,7 +388,7 @@
 			<key interpolation="1" value="30" row="612"/>
 			<key interpolation="0" value="-9" row="616"/>
 			<key interpolation="0" value="0" row="640"/>
-			<key interpolation="0" value="-12.00001" row="641"/>
+			<key interpolation="0" value="-17.00001" row="641"/>
 			<key interpolation="0" value="-2" row="672"/>
 		</track>
 		<track name="item:Z">
@@ -409,7 +410,7 @@
 			<key interpolation="0" value="-16" row="584"/>
 			<key interpolation="0" value="1.4000001" row="640"/>
 			<key interpolation="0" value="6" row="641"/>
-			<key interpolation="0" value="-2" row="672"/>
+			<key interpolation="0" value="-2.9100022" row="672"/>
 		</track>
 		<track name="item:scale">
 			<key interpolation="0" value="12" row="0"/>
@@ -435,13 +436,20 @@
 			<key interpolation="0" value="1" row="570"/>
 			<key interpolation="0" value="4.0000005" row="576"/>
 			<key interpolation="0" value="0.1" row="640"/>
-			<key interpolation="0" value="2.7000005" row="641"/>
+			<key interpolation="0" value="3.7000005" row="641"/>
 			<key interpolation="0" value="57" row="672"/>
 		</track>
 		<track name="item:texture">
 			<key interpolation="0" value="0" row="0"/>
+			<key interpolation="0" value="0" row="493"/>
+			<key interpolation="0" value="1" row="494"/>
+			<key interpolation="0" value="0" row="495"/>
+			<key interpolation="0" value="1" row="496"/>
+			<key interpolation="0" value="0" row="497"/>
 			<key interpolation="0" value="1" row="498"/>
-			<key interpolation="0" value="0" row="505"/>
+			<key interpolation="0" value="0" row="499"/>
+			<key interpolation="0" value="1" row="500"/>
+			<key interpolation="0" value="1" row="505"/>
 			<key interpolation="0" value="0" row="576"/>
 			<key interpolation="0" value="1" row="589"/>
 			<key interpolation="0" value="2" row="601"/>
